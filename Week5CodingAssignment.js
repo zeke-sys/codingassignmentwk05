@@ -8,42 +8,42 @@ What you create is up to you as long as it meets the following requirements:
 2. Use at least two classes.
 3. Your menu should have the options to create, view, and delete elements. */
 
-class Course {
+class Course { //building first class named Course
     constructor(title, level) {
       this.title = title;
       this.level = level;
     }
-    describe() {
-      return `The course ${this.title} is a ${this.level} level class.`
+    describe() { //first method describing what we want Course to return
+      return `The course ${this.title} is a ${this.level} level class.` 
     }
   }
-  class Semester {
+  class Semester { //building second class named Semester
     constructor(name) {
       this.name = name;
-      this.courses = [];
+      this.courses = []; //array where all courses will go
     }
   
-    addCourse(course) {
+    addCourse(course) { //method to add courses into the array
       if (course instanceof Course) {
         this.courses.push(course);
-      } else {
+      } else { //can't fully trust user input. Handling error
         throw new Error(`You can only add an instance of Course. Argument is not a course: ${course}`);
       }
   }
-    describe() {
+    describe() { //method to return number of courses added
       return `You have ${this.courses.length} courses for the ${this.name} semester.`;
     }
   }
   
-  class CourseChart {
+  class CourseChart { //third class named CourseChart similar to a menu. This drives our choices
     constructor() {
       this.semesters = [];
-      this.selectedSemester = null;
+      this.selectedSemester = null; //manages one semester at a time
     }
   
-    start() {
+    start() { //entry point a.k.a where the program starts
     let selection = this.showCourseChartOptions();
-    while (selection != 0) {
+    while (selection != 0) { //while loop accompanied by conditional switch statement based on user entry
       switch(selection) {
         case '1':
           this.registerSemester();
@@ -62,10 +62,10 @@ class Course {
       }
       selection = this.showCourseChartOptions();
     }
-    alert('Goodbye!');
+    alert('Goodbye!'); //exiting the application
   }
   
-  showCourseChartOptions() {
+  showCourseChartOptions() { //what the end user sees upon entering the program
     return prompt(`
     0) exit
     1) register for new semester
@@ -75,7 +75,7 @@ class Course {
     `);
   }
   
-  showSemesterMenuOptions(semesterInfo) {
+  showSemesterMenuOptions(semesterInfo) { //what the end user sees upon trying to register a course in a chosen semester
     return prompt(`
     0) back
     1) add new course
@@ -85,7 +85,7 @@ class Course {
     `);
   }
   
-  displaySemesters() {
+  displaySemesters() { //showing the user the semester they enter
     let semesterString = '';
     for (let i = 0; i < this.semesters.length; i++) {
       semesterString += i+ ') ' + this.semesters[i].name + '\n';
@@ -93,14 +93,14 @@ class Course {
     alert(semesterString);
   }
   
-  registerSemester() {
+  registerSemester() { //prompting the user to enter a semester
     let name = prompt(`Enter which semester youw would like to register for - Spring, Summer, or Fall`);
     this.semesters.push(new Semester(name));
   }
   
   viewSemester() {
     let index = prompt('Enter the index of the semester that you want to view:');
-    if (index > -1 && index < this.semesters.length) {
+    if (index > -1 && index < this.semesters.length) { //making sure the application returns the semester based on index entered
       this.selectedSemester = this.semesters[index]; 
       let description = 'Semester Name: ' + this.selectedSemester.name + '\n';
       description += ' ' + this.selectedSemester.describe() + '\n';
@@ -115,22 +115,22 @@ class Course {
         case '2':
           this.deleteCourse();
       }
-    }
+    } //validate user input
     
   }
   
-  deleteSemester() {
+  deleteSemester() { //method to let end user delete their selected semester
     let index = prompt('Enter the index of the semester that you wish to delete: ');
     if (index > -1 && index < this.semesters.length) {
       this.semesters.splice(index, 1);
     }
   }
   
-  createCourse() {
+  createCourse() { //method to create course
     let name = prompt('Enter name of new course: ');
     let level = prompt('Enter level of new course: 100, 200, 300, or 400 ');
-    if (level == 100) {
-      prompt('Freshman (level 100) class.');
+    if (level == 100) { //conditional statement added to let end user know what the level represents
+      prompt('Freshman (level 100) class.'); 
     } else if (level == 200) {
       prompt('Sophomore (level 200) class.');
     } else if (level == 300) {
@@ -141,7 +141,7 @@ class Course {
     this.selectedSemester.addCourse(new Course(name, level));
   }
   
-  deleteCourse() {
+  deleteCourse() { //method to let end user delete course 
     let index = prompt('Enter the index of the course that you wish to delete: ');
     if (index > -1 && index < this.selectedSemester.courses.length) {
       this.selectedSemester.courses.splice(index, 1);
